@@ -1,16 +1,15 @@
-import { Aside } from '@/components/aside/Aside';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { createRootRoute, Outlet } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 
 export const Route = createRootRoute({
-  component: () => (
-    <div className="flex">
-      <div className="flex">
-        <Aside />
+  component: () => {
+    return (
+      <>
         <Outlet />
-      </div>
-
-      <TanStackRouterDevtools />
-    </div>
-  ),
+        <ReactQueryDevtools initialIsOpen={false} buttonPosition="top-left" />
+        <TanStackRouterDevtools position="bottom-left" />
+      </>
+    );
+  },
 });
