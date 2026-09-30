@@ -12,6 +12,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { subscribeToAuthLoss } from './api/http';
 import { queryClient } from './queryClient';
+import { startNotificationPolling } from './queryClient/notificationPolling';
 import { routeTree } from './routeTree.gen';
 
 export const router = createRouter({ routeTree, history: createHashHistory() });
@@ -20,6 +21,8 @@ subscribeToAuthLoss(() => {
   queryClient.clear();
   router.invalidate();
 });
+
+startNotificationPolling(queryClient);
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

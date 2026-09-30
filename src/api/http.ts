@@ -3,6 +3,12 @@ import axios, { type AxiosInstance } from 'axios';
 
 const CREDENTIALS_KEY = 'green-api-credentials';
 const authLossListeners = new Set<() => void>();
+const credentialsChangeListeners = new Set<() => void>();
+
+export function subscribeToCredentialsChange(listener: () => void) {
+  credentialsChangeListeners.add(listener);
+  return () => credentialsChangeListeners.delete(listener);
+}
 
 export function subscribeToAuthLoss(listener: () => void) {
   authLossListeners.add(listener);
@@ -15,6 +21,7 @@ function clearInstanceCredentials() {
   }
 
   sessionStorage.removeItem(CREDENTIALS_KEY);
+  credentialsChangeListeners.forEach((listener) => listener());
   authLossListeners.forEach((listener) => listener());
   return true;
 }
@@ -41,6 +48,7 @@ function isInstanceNotAuthorized(data: unknown): boolean {
 
 export function saveInstanceCredentials(credentials: LoginParams) {
   sessionStorage.setItem(CREDENTIALS_KEY, JSON.stringify(credentials));
+  credentialsChangeListeners.forEach((listener) => listener());
 }
 
 export function getInstanceCredentials(): LoginParams | null {
