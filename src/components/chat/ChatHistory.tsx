@@ -35,14 +35,14 @@ export function ChatHistory({ chatId, scrollToMessageId }: Props) {
   }, [scrollToMessageId, messages]);
 
   return (
-    <div className="mx-auto flex min-h-0 w-full grow flex-col sm:max-w-4xl">
+    <div className="flex min-h-0 w-full grow flex-col">
       {isFetching && <AppLoaderContent className="mx-auto mt-5 text-white" />}
       {error?.message && <AppErrorMessage message={error.message} />}
       {messages?.length === 0 ? (
         <AppBlockEmptyContent>Сообщений пока нет</AppBlockEmptyContent>
       ) : messages ? (
-        <ScrollArea className="min-h-0 flex-1 px-4 pt-4 pb-0.5">
-          <div className="space-y-4">
+        <ScrollArea className="min-h-0 flex-1 px-4 pb-0.5">
+          <div className="mx-auto w-full space-y-2 sm:max-w-3xl">
             {messages.map((message) => (
               <ChatMessageItem
                 key={message.idMessage}

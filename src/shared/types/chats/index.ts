@@ -16,3 +16,16 @@ export type GetChatsParams = {
 };
 
 export type GetChatsResponse = Chat[];
+
+export type CheckWhatsappParams = {
+  chatId: string;
+  force?: boolean;
+};
+
+export type CheckWhatsappResponse = {
+  existsWhatsapp: boolean;
+  chatId: string;
+  username: string;
+  phoneNumber: string;
+  fromCache: boolean;
+};
