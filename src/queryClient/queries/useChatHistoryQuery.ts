@@ -7,5 +7,7 @@ export function useChatHistoryQuery(params: GetChatHistoryParams) {
   return useQuery({
     queryKey: appKeys.chatHistory(params).queryKey,
     queryFn: () => getChatHistory(params),
+    select: (messages) =>
+      [...messages].sort((a, b) => a.timestamp - b.timestamp),
   });
 }

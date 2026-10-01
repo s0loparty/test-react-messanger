@@ -1,8 +1,5 @@
 import type { GetChatsParams } from '@/shared/types/chats';
-import type {
-  GetChatHistoryParams,
-  SendMessageParams,
-} from '@/shared/types/messages';
+import type { GetChatHistoryParams } from '@/shared/types/messages';
 import { createQueryKeys } from '@lukemorales/query-key-factory';
 
 export const authKeys = createQueryKeys('auth', {
@@ -12,5 +9,5 @@ export const authKeys = createQueryKeys('auth', {
 export const appKeys = createQueryKeys('app', {
   chats: (params?: GetChatsParams) => ['chats', params],
   chatHistory: (params: GetChatHistoryParams) => ['chatHistory', params],
-  sendMessage: (params: SendMessageParams) => ['sendMessage', params],
+  sendMessage: () => ['sendMessage'],
 });

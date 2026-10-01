@@ -3,11 +3,12 @@ import { useEffect, useRef } from 'react';
 type Props = {
   value: string;
   onChange: (value: string) => void;
+  disabled?: boolean;
 };
 
 const MAX_HEIGHT = 160;
 
-export function MessageInput({ value, onChange }: Props) {
+export function MessageInput({ value, onChange, disabled }: Props) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const resizeTextarea = () => {
@@ -28,10 +29,17 @@ export function MessageInput({ value, onChange }: Props) {
     <textarea
       ref={textareaRef}
       value={value}
+      disabled={disabled}
       rows={1}
       placeholder="Сообщение"
       onChange={(e) => {
         onChange(e.target.value);
+      }}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) {
+          e.preventDefault();
+          e.currentTarget.form?.requestSubmit();
+        }
       }}
       className="max-h-40 min-h-12 flex-1 resize-none overflow-y-hidden bg-transparent px-3 py-2 text-sm leading-6 outline-none"
     />
